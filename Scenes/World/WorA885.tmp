@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://w5obl60p44uc"]
+
+[ext_resource type="Script" path="res://Scripts/World/Dimension.gd" id="1_u68ik"]
+[ext_resource type="Script" path="res://Scripts/World/World.gd" id="1_yhp10"]
+[ext_resource type="Script" path="res://Scripts/World/ChunkPool.gd" id="2_1htau"]
+[ext_resource type="PackedScene" uid="uid://bamvugpuwpbeq" path="res://Scenes/World/player.tscn" id="3_gqo7v"]
+
+[node name="World" type="Node"]
+script = ExtResource("1_yhp10")
+
+[node name="ChunkPool" type="Node" parent="."]
+script = ExtResource("2_1htau")
+
+[node name="Dimension" type="Node3D" parent="."]
+script = ExtResource("1_u68ik")
+
+[node name="Player" parent="Dimension" instance=ExtResource("3_gqo7v")]

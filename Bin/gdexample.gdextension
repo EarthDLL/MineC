@@ -1,0 +1,11 @@
+[configuration]
+
+entry_symbol = "gdextension_init"
+compatibility_minimum = "4.3"
+
+[libraries]
+
+windows.debug.x86_64 = "res://Bin/lib.mcue.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "res://Bin/lib.mcue.windows.template_release.x86_64.dll"
+android.debug.arm64 = "res://Bin/lib.mcue.android.template_debug.arm64.so"
+android.release.arm64 = "res://Bin/lib.mcue.android.template_release.arm64.so"

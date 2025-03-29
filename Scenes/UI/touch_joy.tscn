@@ -1,0 +1,213 @@
+[gd_scene load_steps=33 format=3 uid="uid://bov33aohxysep"]
+
+[ext_resource type="Script" uid="uid://bam5dspdarghl" path="res://Scripts/UI/TouchJoy.gd" id="1_plk65"]
+[ext_resource type="Texture2D" uid="uid://cg4ln776ob107" path="res://Resources/Textures/Gui/gui.png" id="2_hwg83"]
+[ext_resource type="Script" uid="uid://b0sjqoeqtfi4e" path="res://Scripts/UI/JoyBtn.gd" id="3_l3y74"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_woel6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8f4r6"]
+atlas = ExtResource("2_hwg83")
+region = Rect2(28, 109, 22, 22)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bw6yj"]
+texture = SubResource("AtlasTexture_8f4r6")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cifr1"]
+texture = SubResource("AtlasTexture_8f4r6")
+modulate_color = Color(0.427451, 0.427451, 0.427451, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_83x10"]
+atlas = ExtResource("2_hwg83")
+region = Rect2(108, 111, 18, 18)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_68k8b"]
+texture = SubResource("AtlasTexture_83x10")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_beh5q"]
+load_path = "res://.godot/imported/gui.png-3a40298a9480e2a6ec088d17385a18b9.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48nps"]
+atlas = SubResource("CompressedTexture2D_beh5q")
+region = Rect2(108, 111, 18, 18)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0asnk"]
+texture = SubResource("AtlasTexture_48nps")
+modulate_color = Color(0.427451, 0.427451, 0.427451, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aku6t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3hxpi"]
+atlas = ExtResource("2_hwg83")
+region = Rect2(80, 109, 22, 22)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tehps"]
+texture = SubResource("AtlasTexture_3hxpi")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_purim"]
+load_path = "res://.godot/imported/gui.png-3a40298a9480e2a6ec088d17385a18b9.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5by7"]
+atlas = SubResource("CompressedTexture2D_purim")
+region = Rect2(80, 109, 22, 22)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jl0k3"]
+texture = SubResource("AtlasTexture_j5by7")
+modulate_color = Color(0.427451, 0.427451, 0.427451, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_58oir"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qqa20"]
+load_path = "res://.godot/imported/gui.png-3a40298a9480e2a6ec088d17385a18b9.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hhhv"]
+atlas = SubResource("CompressedTexture2D_qqa20")
+region = Rect2(54, 109, 22, 22)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kbaj3"]
+texture = SubResource("AtlasTexture_7hhhv")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fdud8"]
+load_path = "res://.godot/imported/gui.png-3a40298a9480e2a6ec088d17385a18b9.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg5ah"]
+atlas = SubResource("CompressedTexture2D_fdud8")
+region = Rect2(54, 109, 22, 22)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hyvow"]
+texture = SubResource("AtlasTexture_dg5ah")
+modulate_color = Color(0.427451, 0.427451, 0.427451, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rkws7"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_k7et2"]
+load_path = "res://.godot/imported/gui.png-3a40298a9480e2a6ec088d17385a18b9.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oeuba"]
+atlas = SubResource("CompressedTexture2D_k7et2")
+region = Rect2(2, 109, 22, 22)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sbw8c"]
+texture = SubResource("AtlasTexture_oeuba")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_25bb1"]
+load_path = "res://.godot/imported/gui.png-3a40298a9480e2a6ec088d17385a18b9.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uo44i"]
+atlas = SubResource("CompressedTexture2D_25bb1")
+region = Rect2(2, 109, 22, 22)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uglb1"]
+texture = SubResource("AtlasTexture_uo44i")
+modulate_color = Color(0.427451, 0.427451, 0.427451, 1)
+
+[node name="TouchJoy" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_plk65")
+
+[node name="Direction" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 176.0
+offset_top = -157.0
+offset_right = 176.0
+offset_bottom = -157.0
+grow_vertical = 0
+metadata/_edit_group_ = true
+
+[node name="Left" type="Button" parent="Direction"]
+texture_filter = 1
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = -135.0
+offset_top = -40.0
+offset_right = -55.0
+offset_bottom = 40.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_woel6")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_bw6yj")
+theme_override_styles/hover = SubResource("StyleBoxTexture_bw6yj")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_cifr1")
+theme_override_styles/normal = SubResource("StyleBoxTexture_bw6yj")
+toggle_mode = true
+keep_pressed_outside = true
+script = ExtResource("3_l3y74")
+
+[node name="Snap" type="Button" parent="Direction"]
+texture_filter = 1
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_woel6")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_68k8b")
+theme_override_styles/hover = SubResource("StyleBoxTexture_68k8b")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_0asnk")
+theme_override_styles/normal = SubResource("StyleBoxTexture_68k8b")
+toggle_mode = true
+keep_pressed_outside = true
+script = ExtResource("3_l3y74")
+
+[node name="Right" type="Button" parent="Direction"]
+texture_filter = 1
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 55.0
+offset_top = -40.0
+offset_right = 135.0
+offset_bottom = 40.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_aku6t")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_tehps")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tehps")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jl0k3")
+theme_override_styles/normal = SubResource("StyleBoxTexture_tehps")
+toggle_mode = true
+keep_pressed_outside = true
+script = ExtResource("3_l3y74")
+
+[node name="Down" type="Button" parent="Direction"]
+texture_filter = 1
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = -40.0
+offset_top = 55.0
+offset_right = 40.0
+offset_bottom = 135.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_58oir")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_kbaj3")
+theme_override_styles/hover = SubResource("StyleBoxTexture_kbaj3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hyvow")
+theme_override_styles/normal = SubResource("StyleBoxTexture_kbaj3")
+toggle_mode = true
+keep_pressed_outside = true
+script = ExtResource("3_l3y74")
+
+[node name="Up" type="Button" parent="Direction"]
+texture_filter = 1
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = -40.0
+offset_top = -135.0
+offset_right = 40.0
+offset_bottom = -55.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rkws7")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_sbw8c")
+theme_override_styles/hover = SubResource("StyleBoxTexture_sbw8c")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_uglb1")
+theme_override_styles/normal = SubResource("StyleBoxTexture_sbw8c")
+toggle_mode = true
+keep_pressed_outside = true
+script = ExtResource("3_l3y74")
+
+[node name="Fly" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

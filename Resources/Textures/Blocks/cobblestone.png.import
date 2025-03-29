@@ -1,0 +1,14 @@
+[remap]
+
+importer="image"
+type="Image"
+uid="uid://dp3sbxqbvck3f"
+path="res://.godot/imported/cobblestone.png-69449bf4d4a08e9ec06d5dcbdc538fa6.image"
+
+[deps]
+
+source_file="res://Resources/Textures/Blocks/cobblestone.png"
+dest_files=["res://.godot/imported/cobblestone.png-69449bf4d4a08e9ec06d5dcbdc538fa6.image"]
+
+[params]
+

@@ -1,0 +1,13 @@
+-I../../godot-cpp/include         
+-I../../godot/headers              
+-std=c++17
+-DDEBUG
+#VSCode配置文件
+
+# MinGW 标准库路径（从你的检查结果复制）
+-ID:/Program Files/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++
+-ID:/Program Files/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32
+-ID:/Program Files/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/backward
+-ID:/Program Files/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include
+-ID:/Program Files/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed
+-ID:/Program Files/mingw64/x86_64-w64-mingw32/include

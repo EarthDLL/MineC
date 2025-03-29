@@ -1,0 +1,283 @@
+[gd_scene load_steps=31 format=3 uid="uid://c6vlmgtqetntn"]
+
+[ext_resource type="Script" uid="uid://2lkr3iqayfrt" path="res://Scenes/Init/menu.gd" id="1_24418"]
+[ext_resource type="ArrayMesh" uid="uid://c5n0buyp1j7rf" path="res://Resources/Mesh/menu.tres" id="1_y6b4v"]
+[ext_resource type="Texture2D" uid="uid://dlw15715ni6jn" path="res://Resources/Textures/Gui/BG/BE_1.2.0_panorama_5.png" id="2_th1yn"]
+[ext_resource type="Texture2D" uid="uid://dd3s02dewr75k" path="res://Resources/Textures/Gui/BG/BE_1.2.0_panorama_0.png" id="3_47uc7"]
+[ext_resource type="Texture2D" uid="uid://dxt4lkcac2w10" path="res://Resources/Textures/Gui/BG/BE_1.2.0_panorama_3.png" id="4_6tu4o"]
+[ext_resource type="Texture2D" uid="uid://benugvhsmupq4" path="res://Resources/Textures/Gui/BG/BE_1.2.0_panorama_1.png" id="5_stn2v"]
+[ext_resource type="Texture2D" uid="uid://duw6fefrr1t4s" path="res://Resources/Textures/Gui/BG/BE_1.2.0_panorama_2.png" id="5_wwkgo"]
+[ext_resource type="Texture2D" uid="uid://de31mvpr4tnrn" path="res://Resources/Textures/Gui/BG/BE_1.2.0_panorama_4.png" id="6_8uumg"]
+[ext_resource type="FontFile" uid="uid://b72hc7kr2tykq" path="res://Resources/Fonts/Minecraft.ttf" id="9_eh01t"]
+[ext_resource type="Texture2D" uid="uid://djo4jch2j1yhq" path="res://Resources/Textures/Gui/title.png" id="10_25udf"]
+[ext_resource type="Theme" uid="uid://75ukwa7kyioy" path="res://Resources/GUI_theme.tres" id="11_0pk8k"]
+[ext_resource type="Script" uid="uid://bwwf6epf1rxas" path="res://Scripts/UI/Button/SoundButton.gd" id="12_631tl"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nwsgy"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+sky_energy_multiplier = 0.0
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_fn6ii"]
+sky_material = SubResource("ProceduralSkyMaterial_nwsgy")
+
+[sub_resource type="Environment" id="Environment_g0npe"]
+background_energy_multiplier = 0.0
+sky = SubResource("Sky_fn6ii")
+ambient_light_source = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1j7iq"]
+emission_enabled = true
+emission_texture = ExtResource("2_th1yn")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_un0xm"]
+emission_enabled = true
+emission_texture = ExtResource("3_47uc7")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7cg1b"]
+emission_enabled = true
+emission_texture = ExtResource("4_6tu4o")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dru4e"]
+emission_enabled = true
+emission_texture = ExtResource("5_wwkgo")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hh3od"]
+emission_enabled = true
+emission_texture = ExtResource("5_stn2v")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_537mr"]
+emission_enabled = true
+emission_texture = ExtResource("6_8uumg")
+
+[sub_resource type="Animation" id="Animation_obdov"]
+resource_name = "Cemera"
+length = 180.0
+loop_mode = 1
+step = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 90, 180),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.174533, 0, 0), Vector3(-0.174533, -3.14159, 0), Vector3(-0.174533, -6.28319, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dywtt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.174533, -3.14159, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dwgqe"]
+_data = {
+&"Cemera": SubResource("Animation_obdov"),
+&"RESET": SubResource("Animation_dywtt")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xe1e2"]
+bg_color = Color(0, 0, 0, 0.615686)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2o71x"]
+font = ExtResource("9_eh01t")
+font_size = 20
+shadow_size = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8p4if"]
+bg_color = Color(0, 0, 0, 0.615686)
+
+[sub_resource type="LabelSettings" id="LabelSettings_t2thh"]
+font_size = 18
+font_color = Color(1, 1, 0.333333, 1)
+outline_size = 1
+outline_color = Color(1, 1, 0.333333, 1)
+
+[sub_resource type="GDScript" id="GDScript_gmg8e"]
+resource_name = "Self"
+script/source = "extends Label
+
+var texts : Array[String] = []
+var tween : Tween = null
+
+func _ready() -> void:
+	var file := FileAccess.open(\"res://Resources/splashes.txt\",FileAccess.READ)
+	if is_instance_valid(file):
+		while file.get_position() < file.get_length():
+			texts.append(file.get_line())
+	set_text(texts.pick_random())
+	set_pivot_offset(size/2)
+	tween_start()
+
+func tween_start() -> void:
+	tween = create_tween()
+	tween.finished.connect(tween_start)
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(self,\"scale\",Vector2(1.4,1.4),0.3)
+	tween.tween_property(self,\"scale\",Vector2(1,1),0.3)
+"
+
+[sub_resource type="GDScript" id="GDScript_8mli6"]
+resource_name = "Self"
+script/source = "extends SoundButton
+
+
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[node name="Menu" type="Node"]
+script = ExtResource("1_24418")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_g0npe")
+
+[node name="Bg" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.5, -0.5)
+mesh = ExtResource("1_y6b4v")
+surface_material_override/0 = SubResource("StandardMaterial3D_1j7iq")
+surface_material_override/1 = SubResource("StandardMaterial3D_un0xm")
+surface_material_override/2 = SubResource("StandardMaterial3D_7cg1b")
+surface_material_override/3 = SubResource("StandardMaterial3D_dru4e")
+surface_material_override/4 = SubResource("StandardMaterial3D_hh3od")
+surface_material_override/5 = SubResource("StandardMaterial3D_537mr")
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(-1, 4.4023e-07, -2.49667e-06, 0, 0.984808, 0.173648, 2.53518e-06, 0.173648, -0.984808, 0, 0, 0)
+
+[node name="Anima" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dwgqe")
+}
+
+[node name="Gui" type="Control" parent="."]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CopyRight" type="Label" parent="Gui"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -34.0
+offset_right = 184.0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_xe1e2")
+text = " Rebulit by EarthDLL
+ CopyRight Mojang Studio"
+label_settings = SubResource("LabelSettings_2o71x")
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Gui"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_8p4if")
+text = "v0.1.beta1"
+label_settings = SubResource("LabelSettings_2o71x")
+horizontal_alignment = 2
+
+[node name="Title" type="TextureRect" parent="Gui"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 60.0
+offset_right = 400.0
+offset_bottom = 260.0
+grow_horizontal = 2
+texture = ExtResource("10_25udf")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Splash" type="Label" parent="Gui/Title"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -97.0
+offset_top = -20.0
+offset_right = 93.0
+offset_bottom = -0.999985
+grow_horizontal = 0
+grow_vertical = 0
+rotation = -0.410152
+pivot_offset = Vector2(95, 9)
+text = "This is Minecraft!"
+label_settings = SubResource("LabelSettings_t2thh")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_gmg8e")
+
+[node name="MenuButton" type="VBoxContainer" parent="Gui"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -165.0
+offset_top = 268.0
+offset_right = 170.0
+offset_bottom = -144.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Start" type="Button" parent="Gui/MenuButton"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+theme = ExtResource("11_0pk8k")
+theme_override_font_sizes/font_size = 18
+text = "游戏"
+script = SubResource("GDScript_8mli6")
+
+[node name="MutiStart" type="Button" parent="Gui/MenuButton"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+theme = ExtResource("11_0pk8k")
+theme_override_font_sizes/font_size = 18
+text = "多人游戏"
+script = ExtResource("12_631tl")
+
+[node name="Setting" type="Button" parent="Gui/MenuButton"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+theme = ExtResource("11_0pk8k")
+theme_override_font_sizes/font_size = 18
+text = "设置"
+script = ExtResource("12_631tl")
+
+[connection signal="pressed" from="Gui/MenuButton/Start" to="." method="button_pressed_start"]

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Geometry" load_steps=2 format=3 uid="uid://bb80nllkoydi8"]
+
+[ext_resource type="Script" uid="uid://jo8cc8wjvql3" path="res://Scripts/Resources/Geometry.gd" id="1_sxpmf"]
+
+[resource]
+script = ExtResource("1_sxpmf")
+id = "geo.cube"
+textures = Array[String](["up", "down", "west", "east", "north", "south"])

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://chpcdllpp6qu0"]
+
+[ext_resource type="Script" uid="uid://gmawkbmc0q4r" path="res://Scripts/Scenes/debuger.gd" id="1_sgrgr"]
+[ext_resource type="FontFile" uid="uid://b72hc7kr2tykq" path="res://Resources/Fonts/Minecraft.ttf" id="2_3nlcs"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lx281"]
+line_spacing = 0.0
+font = ExtResource("2_3nlcs")
+font_size = 15
+
+[node name="Debuger" type="CanvasLayer"]
+script = ExtResource("1_sgrgr")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 5.0
+offset_right = 20.0
+offset_bottom = 28.0
+grow_horizontal = 2
+theme_override_constants/line_spacing = -5
+label_settings = SubResource("LabelSettings_lx281")

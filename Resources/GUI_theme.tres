@@ -1,0 +1,52 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://75ukwa7kyioy"]
+
+[ext_resource type="Texture2D" uid="uid://cg4ln776ob107" path="res://Resources/Textures/Gui/gui.png" id="1_xa3rn"]
+[ext_resource type="FontFile" uid="uid://b72hc7kr2tykq" path="res://Resources/Fonts/Minecraft.ttf" id="2_f8h2h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qiigc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_076o2"]
+texture = ExtResource("1_xa3rn")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(217, 28, 6, 6)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nqtk4"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+texture = ExtResource("1_xa3rn")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(217, 36, 6, 6)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mn7hx"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+texture = ExtResource("1_xa3rn")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(225, 28, 6, 6)
+
+[resource]
+default_font = ExtResource("2_f8h2h")
+default_font_size = 16
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+Button/colors/font_focus_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/styles/focus = SubResource("StyleBoxEmpty_qiigc")
+Button/styles/hover = SubResource("StyleBoxTexture_076o2")
+Button/styles/normal = SubResource("StyleBoxTexture_nqtk4")
+Button/styles/pressed = SubResource("StyleBoxTexture_mn7hx")

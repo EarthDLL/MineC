@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="WorldInfo" load_steps=2 format=3 uid="uid://bl68a7a4v5yas"]
+
+[ext_resource type="Script" uid="uid://c4kdfigvdnp7u" path="res://Scripts/Resources/WorldInfo.gd" id="1_bo1t3"]
+
+[resource]
+script = ExtResource("1_bo1t3")
+world_name = "你好"
+seed = 15
+game_mode = 0
+ticks = 0
+create_time = 1712996019
+first_build = true

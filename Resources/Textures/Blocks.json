@@ -1,0 +1,15 @@
+{
+	"base_information":{
+		"format_version" : 1,
+		"pack_name" : "MCUE"
+	},
+	"textures":{
+		"miss" : "Blocks/dirt.png",
+		"dirt" : "Blocks/dirt.png",
+		"wool" : "Blocks/white_wool.png",
+		"grass" : "Blocks/grass.png",
+		"stone" : "Blocks/stone.png",
+		"bedrock" : "Blocks/bedrock.png",
+		"cobblestone" : "Blocks/cobblestone.png",
+	}
+}

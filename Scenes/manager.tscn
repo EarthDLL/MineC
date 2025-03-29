@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7t1w56x8wscl"]
+
+[ext_resource type="Script" uid="uid://b7b8gmq8owqoq" path="res://Scripts/Managers/Manager.gd" id="1_cm41j"]
+[ext_resource type="AudioStream" uid="uid://cysl2mwct8owd" path="res://Resources/Sounds/Click.mp3" id="2_foci8"]
+
+[node name="Manager" type="Node"]
+script = ExtResource("1_cm41j")
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_foci8")
+max_polyphony = 5
+bus = &"UI"

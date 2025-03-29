@@ -1,0 +1,96 @@
+[gd_scene load_steps=15 format=4 uid="uid://d00lcnhkwtugq"]
+
+[ext_resource type="Script" uid="uid://8s1dn4wdxugn" path="res://Test/mesh.gd" id="1_cm77y"]
+[ext_resource type="Texture2D" uid="uid://dlw15715ni6jn" path="res://Resources/Textures/Gui/BG/BE_1.2.0_panorama_5.png" id="2_2urat"]
+[ext_resource type="Texture2D" uid="uid://dd3s02dewr75k" path="res://Resources/Textures/Gui/BG/BE_1.2.0_panorama_0.png" id="3_7kud0"]
+[ext_resource type="Texture2D" uid="uid://dxt4lkcac2w10" path="res://Resources/Textures/Gui/BG/BE_1.2.0_panorama_3.png" id="4_rlja5"]
+[ext_resource type="Texture2D" uid="uid://duw6fefrr1t4s" path="res://Resources/Textures/Gui/BG/BE_1.2.0_panorama_2.png" id="5_q6wgg"]
+[ext_resource type="Texture2D" uid="uid://benugvhsmupq4" path="res://Resources/Textures/Gui/BG/BE_1.2.0_panorama_1.png" id="6_md14k"]
+[ext_resource type="Texture2D" uid="uid://de31mvpr4tnrn" path="res://Resources/Textures/Gui/BG/BE_1.2.0_panorama_4.png" id="7_rtcdv"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_7khbs"]
+_surfaces = [{
+"aabb": AABB(0, 0, 0, 1, 1e-05, 1),
+"attribute_data": PackedByteArray("AAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/AACAPwAAgD8AAAAAAACAPwAAAAAAAAAA"),
+"format": 34359738385,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AACAPwAAAAAAAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAA")
+}, {
+"aabb": AABB(0, 0, 0, 1, 1.00001, 1e-05),
+"attribute_data": PackedByteArray("AAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/AACAPwAAgD8AAAAAAACAPwAAAAAAAAAA"),
+"format": 34359738385,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("AAAAAAAAgD8AAAAAAACAPwAAgD8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgD8AAAAA")
+}, {
+"aabb": AABB(0, 0, 0, 1e-05, 1.00001, 1.00001),
+"attribute_data": PackedByteArray("AAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/AACAPwAAgD8AAAAAAACAPwAAAAAAAAAA"),
+"format": 34359738385,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("AAAAAAAAgD8AAIA/AAAAAAAAgD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/")
+}, {
+"aabb": AABB(0, 0, 1, 1.00001, 1.00001, 1.00136e-05),
+"attribute_data": PackedByteArray("AAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/AACAPwAAgD8AAAAAAACAPwAAAAAAAAAA"),
+"format": 34359738385,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("AACAPwAAgD8AAIA/AAAAAAAAgD8AAIA/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAIA/AACAPwAAAAAAAIA/AACAPwAAgD8AAIA/")
+}, {
+"aabb": AABB(1, 0, 0, 1.00136e-05, 1.00001, 1),
+"attribute_data": PackedByteArray("AAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/AACAPwAAgD8AAAAAAACAPwAAAAAAAAAA"),
+"format": 34359738385,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("AACAPwAAgD8AAAAAAACAPwAAgD8AAIA/AACAPwAAAAAAAIA/AACAPwAAAAAAAIA/AACAPwAAAAAAAAAAAACAPwAAgD8AAAAA")
+}, {
+"aabb": AABB(0, 1, 0, 1.00001, 1.00136e-05, 1),
+"attribute_data": PackedByteArray("AAAAAAAAAAAAAIA/AAAAAAAAgD8AAIA/AACAPwAAgD8AAAAAAACAPwAAAAAAAAAA"),
+"format": 34359738385,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("AACAPwAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAIA/AAAAAAAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAAAA")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vuu2w"]
+emission_enabled = true
+emission_texture = ExtResource("2_2urat")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6e67e"]
+emission_enabled = true
+emission_texture = ExtResource("3_7kud0")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lgdh0"]
+emission_enabled = true
+emission_texture = ExtResource("4_rlja5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ydc5"]
+emission_enabled = true
+emission_texture = ExtResource("5_q6wgg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_36qv8"]
+emission_enabled = true
+emission_texture = ExtResource("6_md14k")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xqiu6"]
+emission_enabled = true
+emission_texture = ExtResource("7_rtcdv")
+
+[node name="Node" type="Node"]
+script = ExtResource("1_cm77y")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("ArrayMesh_7khbs")
+surface_material_override/0 = SubResource("StandardMaterial3D_vuu2w")
+surface_material_override/1 = SubResource("StandardMaterial3D_6e67e")
+surface_material_override/2 = SubResource("StandardMaterial3D_lgdh0")
+surface_material_override/3 = SubResource("StandardMaterial3D_1ydc5")
+surface_material_override/4 = SubResource("StandardMaterial3D_36qv8")
+surface_material_override/5 = SubResource("StandardMaterial3D_xqiu6")

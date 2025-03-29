@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://6m3bvf5qtrqt"]
+
+[resource]
+texture_filter = 0
+grow_amount = -0.2
+proximity_fade_distance = 3899.78

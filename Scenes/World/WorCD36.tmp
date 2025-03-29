@@ -1,0 +1,130 @@
+[gd_scene load_steps=17 format=3 uid="uid://w5obl60p44uc"]
+
+[ext_resource type="Script" path="res://Scripts/World/World.gd" id="1_yhp10"]
+[ext_resource type="PackedScene" uid="uid://bcetatndcguqn" path="res://Scenes/UI/joy_stick.tscn" id="3_gdowx"]
+[ext_resource type="Texture2D" uid="uid://bfjlhhbyxqbvc" path="res://Resources/Textures/Gui/jump.png" id="4_aebpa"]
+[ext_resource type="PackedScene" uid="uid://mn68goq3kx2i" path="res://Scenes/player.tscn" id="5_sn4hj"]
+[ext_resource type="Texture2D" uid="uid://bt5l6of5m4kq3" path="res://Resources/Textures/Gui/jump_pressed.png" id="5_taan8"]
+[ext_resource type="Script" path="res://Scripts/UI/JoyBtn.gd" id="6_5qxru"]
+[ext_resource type="Texture2D" uid="uid://1arknmwqwtx2" path="res://Resources/Textures/Gui/sneak.png" id="7_c4nk3"]
+[ext_resource type="Texture2D" uid="uid://5m0i4iggrdnd" path="res://Resources/Textures/Gui/sneak_pressed.png" id="8_onc64"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_g3d3s"]
+sky_top_color = Color(0.447059, 0.607843, 1, 1)
+sky_horizon_color = Color(0.627451, 0.776471, 0.956863, 1)
+ground_bottom_color = Color(0.556863, 0.686275, 0.835294, 1)
+ground_horizon_color = Color(0.627451, 0.776471, 0.956863, 1)
+ground_curve = 0.04
+
+[sub_resource type="Sky" id="Sky_cnv8b"]
+sky_material = SubResource("ProceduralSkyMaterial_g3d3s")
+process_mode = 3
+radiance_size = 0
+
+[sub_resource type="Environment" id="Environment_gchlk"]
+background_mode = 2
+sky = SubResource("Sky_cnv8b")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 0.6
+tonemap_mode = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k0q1d"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8jbj1"]
+texture = ExtResource("4_aebpa")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_777j4"]
+texture = ExtResource("5_taan8")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pfvia"]
+texture = ExtResource("7_c4nk3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qnlyc"]
+texture = ExtResource("8_onc64")
+
+[node name="World" type="Node"]
+script = ExtResource("1_yhp10")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_gchlk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.214735, 0.845823, -0.488336, 0, 0.5, 0.866025, 0.976672, -0.185966, 0.107368, 0, 100, 0)
+visible = false
+light_color = Color(1, 0.977188, 0.771875, 1)
+light_energy = 4.038
+
+[node name="Player2" parent="." node_paths=PackedStringArray("joy", "jump", "sneak") instance=ExtResource("5_sn4hj")]
+transform = Transform3D(1, 0, 0, 0, 0.99863, -0.052336, 0, 0.052336, 0.998629, 128, 64, 128)
+joy = NodePath("../ControlBar/JoyStick")
+jump = NodePath("../ControlBar/Jump")
+sneak = NodePath("../ControlBar/Sneak")
+
+[node name="Camera3D" parent="Player2" index="0"]
+current = true
+
+[node name="ControlBar" type="Control" parent="."]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="JoyStick" parent="ControlBar" instance=ExtResource("3_gdowx")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = -340.0
+offset_right = 340.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Jump" type="Button" parent="ControlBar"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.85
+anchor_top = 0.606
+anchor_right = 0.85
+anchor_bottom = 0.606
+offset_left = -50.0
+offset_top = -50.32
+offset_right = 50.0
+offset_bottom = 49.68
+theme_override_styles/focus = SubResource("StyleBoxEmpty_k0q1d")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_8jbj1")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_777j4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_8jbj1")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_777j4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_8jbj1")
+script = ExtResource("6_5qxru")
+
+[node name="Sneak" type="Button" parent="ControlBar"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.85
+anchor_top = 0.8
+anchor_right = 0.85
+anchor_bottom = 0.8
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_k0q1d")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_pfvia")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_qnlyc")
+theme_override_styles/hover = SubResource("StyleBoxTexture_pfvia")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_qnlyc")
+theme_override_styles/normal = SubResource("StyleBoxTexture_pfvia")
+script = ExtResource("6_5qxru")
+
+[editable path="Player2"]

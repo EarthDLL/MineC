@@ -1,0 +1,16 @@
+.Bin/
+*.o
+*.a
+*.so
+*.dll
+*.exe
+
+# 编辑器/IDE 文件
+.vscode/
+.idea/
+.GDExtension/godot-cpp
+.godot/
+
+# 系统文件
+.DS_Store
+Thumbs.db

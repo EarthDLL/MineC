@@ -1,0 +1,14 @@
+[remap]
+
+importer="image"
+type="Image"
+uid="uid://c4e4imhmhukqj"
+path="res://.godot/imported/bedrock.png-2b3833e45b8719429bdbebddca929fe1.image"
+
+[deps]
+
+source_file="res://Resources/Textures/Blocks/bedrock.png"
+dest_files=["res://.godot/imported/bedrock.png-2b3833e45b8719429bdbebddca929fe1.image"]
+
+[params]
+

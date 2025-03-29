@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcetatndcguqn"]
+
+[ext_resource type="Script" uid="uid://birqabwvmwvs" path="res://Scripts/UI/joy_stick.gd" id="1_d7cwt"]
+[ext_resource type="Texture2D" uid="uid://csjatp11ij6uh" path="res://Resources/Textures/Gui/joystick_frame.png" id="1_wwofl"]
+[ext_resource type="Texture2D" uid="uid://dlweu1fdu4bgh" path="res://Resources/Textures/Gui/joystick_knob.png" id="3_frmpe"]
+
+[sub_resource type="GDScript" id="GDScript_c00h3"]
+resource_name = "Stick"
+script/source = "extends TextureRect
+
+@onready var joy_stick: JoyStick = $\"..\"
+var offest := Vector2.ZERO
+
+var id : int = -1
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		if event.is_pressed():
+			if id == -1:
+				id = event.index
+				event = make_input_local(event)
+				offest = event.get_position()
+		else:
+			if event.index == id:
+				id = -1
+				joy_stick.reset_stick()
+		
+"
+
+[node name="JoyStick" type="Control"]
+modulate = Color(1, 1, 1, 0.509804)
+texture_filter = 1
+custom_minimum_size = Vector2(280, 280)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 280.0
+offset_bottom = 280.0
+script = ExtResource("1_d7cwt")
+
+[node name="Joy" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_wwofl")
+
+[node name="Stick" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_frmpe")
+script = SubResource("GDScript_c00h3")
