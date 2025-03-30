@@ -15,6 +15,7 @@
 #include "BlockInfo.h"
 #include "RenderTool.h"
 #include "ChunkManager.h"
+#include "RenderManager.h"
 
 using namespace godot;
 
@@ -27,6 +28,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(BlockInfo);
 	GDREGISTER_CLASS(RenderTool);
 	GDREGISTER_CLASS(ChunkManager);
+	GDREGISTER_CLASS(RenderManager);
 	/*GDREGISTER_CLASS(ExampleRef);
 	GDREGISTER_CLASS(ExampleMin);
 	GDREGISTER_CLASS(Example);

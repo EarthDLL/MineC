@@ -11,21 +11,11 @@ using namespace godot;
 
 void ChunkManager :: _bind_methods() {
     ClassDB::bind_method(D_METHOD("set_camera","node"), &ChunkManager::set_camera);
-    ClassDB::bind_method(D_METHOD("start"), &ChunkManager::start);
     ClassDB::bind_method(D_METHOD("create_all_chunks","pool"), &ChunkManager::create_all_chunks);
-    ClassDB::bind_method(D_METHOD("set_render_distance","count"), &ChunkManager::set_render_distance);
 }
 
 void ChunkManager :: set_camera(Node3D* value){
     camera = value;
-}
-
-void ChunkManager :: set_render_distance(int value){
-    render_distance = value;
-}
-
-void ChunkManager::start(){
-    set_physics_process(true);
 }
 
 void ChunkManager::_physics_process(float _delta){
@@ -38,27 +28,25 @@ Vector2i ChunkManager::get_chunk_id_by_pos(Vector3 pos){
     return Vector2i((Vector2(pos.x,pos.z)/16).floor());
 }
 
-void ChunkManager::create_chunk(Vector2i id){
-    Chunk* chunk = memnew(Chunk);
+Ref<Chunk> ChunkManager::create_chunk(Vector2i id){
+    if(has_chunk(id)){
+        return get_chunk(id);
+    }
+    Ref<Chunk> chunk = Ref<Chunk>(memnew(Chunk));
     chunk -> init(id , Vector3i(16,256,16));
     chunk -> load_by_noise(noise);
     chunks.set(id , chunk);
-    render_tool -> render(chunk);
-    MeshInstance3D* instance = memnew(MeshInstance3D);
-    ArrayMesh* mesh = memnew(ArrayMesh);
-    mesh -> add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES,render_tool -> get_render_data());
-    instance -> set_mesh(mesh);
-	instance -> set_position(Vector3(id.x * 16, 0 , id.y* 16));
-	instance -> set_material_override(render_tool -> ResManager -> get("block_material"));
-    call_deferred("add_child",instance);
+    return chunk;
+}
+
+Ref<Chunk> ChunkManager::get_chunk(Vector2i id){
+    Variant value = chunks.get(id ,nullptr);
+    return Ref<Chunk>(value);
 }
 
 void ChunkManager :: _ready(){
     Ref<Resource> noise_res = ResourceLoader::get_singleton()->load("res://Resources/Noise/Noise.tres");
     noise = Ref<Noise>(Object::cast_to<Noise>(noise_res.ptr()));
-    set_physics_process(false);
-    render_tool = memnew(RenderTool);
-    render_tool -> init();
     return;
 }
 
@@ -71,51 +59,29 @@ void ChunkManager::create_all_chunks(Array pool){
     is_thread_running.store(false);
 }
 
+bool ChunkManager::has_chunk(Vector2i id){
+    return chunks.has(id);
+}
+
+void ChunkManager::set_lock(bool value){
+    is_locked = value;
+}
+
 void ChunkManager::update(){
-    
-    if(is_thread_running.load() == true){
-        UtilityFunctions::print("waiting");
+    if(is_locked){
         return;
-        /*if(is_thread_running.load() == false){
-            load_chunk_thread -> wait_to_finish();
-            memdelete(load_chunk_thread);
-            load_chunk_thread = nullptr;
-        }else{
-            return;
-        }
-        if(load_chunk_thread -> is_started()){
-            UtilityFunctions::print("started");
-            if(load_chunk_thread -> is_alive()){
-                UtilityFunctions::print("alive");
-                return;
-            }
-            else{
-                UtilityFunctions::print("Delete Thread");
-                load_chunk_thread -> wait_to_finish();
-                memdelete(load_chunk_thread);
-                load_chunk_thread = nullptr;
-            }
-        }
-        else{
-            memdelete(load_chunk_thread);
-            load_chunk_thread = nullptr;
-        }*/
     }
 
-    Vector2i current_chunk_id = get_chunk_id_by_pos(camera -> get_global_position());
-    Array wait_pool;
-    for(int x = current_chunk_id.x - render_distance ; x < current_chunk_id.x+ render_distance +1;x++){
-        for(int y = current_chunk_id.y-render_distance; y < current_chunk_id.y+render_distance+1;y++){
-            Vector2i id = Vector2i(x,y);
-            if(chunks.has(id) == false){
-                wait_pool.append(id);
+    Array keys = chunks.keys();
+    UtilityFunctions::print(keys.size());
+    Vector2 camera_pos = Vector2(camera -> get_global_position().x , camera -> get_global_position().z);
+    for(int i = 0; i < keys.size() ; i++){
+        Variant value = chunks.get(keys[i],nullptr);
+        Ref<Chunk> chunk = Ref<Chunk>(value);
+        if(chunk != nullptr){
+            if(camera_pos.distance_squared_to(chunk -> get_center()) > 16 * physic_distance){
+                chunks.erase(keys[i]);
             }
         }
-    }
-    if(wait_pool.size() > 0){
-        load_chunk_thread = memnew(Thread);
-        Engine::get_singleton()->get_singleton("Debuger")->call("output_time");
-        Callable callable = Callable(this , "create_all_chunks").bind(wait_pool);
-        load_chunk_thread -> start(callable);
     }
 }

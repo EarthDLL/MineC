@@ -5,13 +5,15 @@ class_name World
 var world_info : WorldInfo
 var dir : DirAccess = null
 var players : Array[Player] = []
+var dimension : Dimension = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var dimension := Dimension.new()
+	dimension = Dimension.new()
 	dimension.camera = $Player2
 	add_child(dimension)
 	dimension.players.append($Player2)
+	get_tree().current_scene.get_node("TestUI/MainPanel").start.connect(start)
 
 ##初始化存档
 func first_build_world_info() -> void:
@@ -22,3 +24,11 @@ func reload() -> void:
 
 func load_world(path : String) -> void:
 	pass
+
+func start(dis : int) -> void:
+	var manager = RenderManager.new()
+	add_child(manager)
+	manager.set_camera($Player2)
+	manager.set_render_distance(dis)
+	manager.set_chunk_manager(dimension.manager)
+	manager.start()

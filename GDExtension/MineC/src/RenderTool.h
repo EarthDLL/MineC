@@ -29,7 +29,7 @@ public:
     Array get_render_data();
     void init();
     Object *ResManager;
-    bool render(Chunk* chunk);
+    bool render(Ref<Chunk> chunk);
     void draw_cube_side(Vector3i pos,short block_id,int side);
     Vector3 rotate_point(Vector3 pos , Vector3 rotate_pos , float degree);
 };

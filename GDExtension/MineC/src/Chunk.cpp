@@ -77,6 +77,10 @@ void Chunk::set_block_high_range(int x , int z , int from_y , int to_y , int id)
     }
 }
 
+Vector2 Chunk::get_center(){
+    return Vector2(chunk_id) * 16 + Vector2(8,8);
+}
+
 bool Chunk :: is_full_block(Object *info){
     if(info == nullptr){
         return false;

@@ -46,7 +46,7 @@ Vector3 RenderTool :: rotate_point(Vector3 pos , Vector3 rotate_pos , float degr
     return final_pos;
 }
 
-bool RenderTool::render(Chunk* chunk){
+bool RenderTool::render(Ref<Chunk> chunk){
     if(!is_inited){
         return false;
     }

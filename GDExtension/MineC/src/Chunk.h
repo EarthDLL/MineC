@@ -44,6 +44,7 @@ public:
     void set_block_high_range(int x , int z , int from_y , int to_y , int id);
     short get_block(int x , int y, int z);
     void draw_cube_side(Vector3i pos,Ref<BlockInfo> block,int side);
+    Vector2 get_center();
 };
 
 VARIANT_ENUM_CAST(Chunk :: WorldType);
