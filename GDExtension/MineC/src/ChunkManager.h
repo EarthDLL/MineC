@@ -1,7 +1,9 @@
 #ifndef ChunkManager_H
 #define ChunkManager_H
 
+#include <atomic>
 #include <godot_cpp/classes/node3d.hpp>
+#include <godot_cpp/classes/material.hpp>
 #include <godot_cpp/classes/thread.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/array_mesh.hpp>
@@ -23,8 +25,9 @@ private:
     Array instances;
     Dictionary chunks;
     Thread* load_chunk_thread;
+    std::atomic<bool> is_thread_running{false};
     RenderTool* render_tool;
-    Noise* noise;
+    Ref<Noise> noise;
 public:
     void _ready();
     void set_render_distance(int value);

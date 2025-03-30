@@ -1,5 +1,5 @@
 extends Node3D
-class_name ChunkManager
+#class_name ChunkManager
 
 var range := 16
 var camera : Node3D = null

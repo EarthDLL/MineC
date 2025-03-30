@@ -51,7 +51,7 @@ script/source = "extends Panel
 signal start
 
 func _on_button_pressed() -> void:
-	emit_signal(\"start\")
+	emit_signal(\"start\",roundf(get_tree().current_scene.get_node(\"TestUI/MainPanel/MainList/RenderDis/RenderDis\").value))
 	queue_free()
 "
 

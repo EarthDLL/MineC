@@ -92,7 +92,7 @@ bool RenderTool::render(Chunk* chunk){
     array[Mesh::ARRAY_VERTEX] = vertice;
 	array[Mesh::ARRAY_TEX_UV] = uv;
 	render_data = array;
-    UtilityFunctions::print(count);
+    //UtilityFunctions::print(count);
 	return true;
 }
 

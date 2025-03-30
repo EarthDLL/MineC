@@ -5,12 +5,15 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/variant/array.hpp>
 #include <godot_cpp/variant/variant.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
 
 using namespace godot;
 
 void ChunkManager :: _bind_methods() {
-    ClassDB::bind_method(D_METHOD("set_camera"), &ChunkManager::set_camera);
-    ClassDB::bind_method(D_METHOD("set_render_distance"), &ChunkManager::set_render_distance);
+    ClassDB::bind_method(D_METHOD("set_camera","node"), &ChunkManager::set_camera);
+    ClassDB::bind_method(D_METHOD("start"), &ChunkManager::start);
+    ClassDB::bind_method(D_METHOD("create_all_chunks","pool"), &ChunkManager::create_all_chunks);
+    ClassDB::bind_method(D_METHOD("set_render_distance","count"), &ChunkManager::set_render_distance);
 }
 
 void ChunkManager :: set_camera(Node3D* value){
@@ -51,7 +54,8 @@ void ChunkManager::create_chunk(Vector2i id){
 }
 
 void ChunkManager :: _ready(){
-    noise = ResourceLoader::get_singleton()->load("res://Resources/Noise/Noise.tres");
+    Ref<Resource> noise_res = ResourceLoader::get_singleton()->load("res://Resources/Noise/Noise.tres");
+    noise = Ref<Noise>(Object::cast_to<Noise>(noise_res.ptr()));
     set_physics_process(false);
     render_tool = memnew(RenderTool);
     render_tool -> init();
@@ -59,24 +63,46 @@ void ChunkManager :: _ready(){
 }
 
 void ChunkManager::create_all_chunks(Array pool){
+    is_thread_running.store(true);
     for(int i=0;i<pool.size();i++){
         Variant chunk_id = pool[i];
         create_chunk(Vector2i(chunk_id));
     }
-    Engine::get_singleton()->get_singleton("Debuger")->call("output_time");
+    is_thread_running.store(false);
 }
 
 void ChunkManager::update(){
-    if(load_chunk_thread != nullptr && load_chunk_thread -> is_started()){
-        if(load_chunk_thread -> is_alive()){
-            return;
-        }else{
+    
+    if(is_thread_running.load() == true){
+        UtilityFunctions::print("waiting");
+        return;
+        /*if(is_thread_running.load() == false){
             load_chunk_thread -> wait_to_finish();
+            memdelete(load_chunk_thread);
+            load_chunk_thread = nullptr;
+        }else{
+            return;
         }
+        if(load_chunk_thread -> is_started()){
+            UtilityFunctions::print("started");
+            if(load_chunk_thread -> is_alive()){
+                UtilityFunctions::print("alive");
+                return;
+            }
+            else{
+                UtilityFunctions::print("Delete Thread");
+                load_chunk_thread -> wait_to_finish();
+                memdelete(load_chunk_thread);
+                load_chunk_thread = nullptr;
+            }
+        }
+        else{
+            memdelete(load_chunk_thread);
+            load_chunk_thread = nullptr;
+        }*/
     }
 
-    load_chunk_thread = memnew(Thread);
-    Vector2i current_chunk_id = get_chunk_id_by_pos(camera -> global_position);
+    Vector2i current_chunk_id = get_chunk_id_by_pos(camera -> get_global_position());
     Array wait_pool;
     for(int x = current_chunk_id.x - render_distance ; x < current_chunk_id.x+ render_distance +1;x++){
         for(int y = current_chunk_id.y-render_distance; y < current_chunk_id.y+render_distance+1;y++){
@@ -87,8 +113,9 @@ void ChunkManager::update(){
         }
     }
     if(wait_pool.size() > 0){
+        load_chunk_thread = memnew(Thread);
         Engine::get_singleton()->get_singleton("Debuger")->call("output_time");
-        Callable callable = Callable(create_all_chunks).bind(wait_pool);
+        Callable callable = Callable(this , "create_all_chunks").bind(wait_pool);
         load_chunk_thread -> start(callable);
     }
 }
