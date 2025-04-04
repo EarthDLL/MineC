@@ -8,9 +8,12 @@
 # 编辑器/IDE 文件
 .vscode/
 .idea/
-.GDExtension/godot-cpp
+.GDExtension/godot-cpp/
 .godot/
 
 # 系统文件
 .DS_Store
 Thumbs.db
+.nomedia
+.dblite
+.os
