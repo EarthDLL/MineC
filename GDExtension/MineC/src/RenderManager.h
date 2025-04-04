@@ -35,6 +35,7 @@ private:
     Array edge_pool;
     Array merge_pool;
 public:
+    void try_render_edge(Vector2i chunk_id ,Ref<Chunk> chunk , Ref<ChunkRenderData> self);
     void _ready();
     void set_merge_level(int value);
     void set_render_distance(int value);
@@ -45,8 +46,10 @@ public:
     bool render_chunk(Vector2i chunk_id);
     void render_all_chunks(Array pool);
     void update();
-    void try_merge();
+    void try_merge(bool force);
     bool is_chunk_rendered(Vector2i chunk_id);
+    void test_edge(Ref<ChunkRenderData> data);
+    void add_to_data(Array data , PackedVector3Array& vertice, PackedVector2Array& uv);
 };
 
 

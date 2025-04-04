@@ -12,10 +12,11 @@
 #include <godot_cpp/godot.hpp>
 
 #include "Chunk.h"
-#include "BlockInfo.h"
+#include "BlockModelInfo.h"
 #include "RenderTool.h"
 #include "ChunkManager.h"
 #include "RenderManager.h"
+#include "ChunkRenderData.h"
 
 using namespace godot;
 
@@ -25,19 +26,11 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 	}
 
 	GDREGISTER_CLASS(Chunk);
-	GDREGISTER_CLASS(BlockInfo);
+	GDREGISTER_CLASS(BlockModelInfo);
 	GDREGISTER_CLASS(RenderTool);
 	GDREGISTER_CLASS(ChunkManager);
 	GDREGISTER_CLASS(RenderManager);
-	/*GDREGISTER_CLASS(ExampleRef);
-	GDREGISTER_CLASS(ExampleMin);
-	GDREGISTER_CLASS(Example);
-	GDREGISTER_VIRTUAL_CLASS(ExampleVirtual);
-	GDREGISTER_ABSTRACT_CLASS(ExampleAbstractBase);
-	GDREGISTER_CLASS(ExampleConcrete);
-	GDREGISTER_CLASS(ExampleBase);
-	GDREGISTER_CLASS(ExampleChild);
-	GDREGISTER_RUNTIME_CLASS(ExampleRuntime);*/
+	GDREGISTER_CLASS(ChunkRenderData);
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {

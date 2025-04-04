@@ -1,8 +1,7 @@
-[gd_resource type="BlockInfo" format=3 uid="uid://b1iwro2lttlon"]
+[gd_resource type="BlockModelInfo" format=3 uid="uid://dx4eainlp1877"]
 
 [resource]
 type_id = "minecraft:wool"
-id = 3
 texture_pieces = {
 "*": "wool"
 }

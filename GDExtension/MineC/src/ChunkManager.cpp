@@ -33,7 +33,7 @@ Ref<Chunk> ChunkManager::create_chunk(Vector2i id){
         return get_chunk(id);
     }
     Ref<Chunk> chunk = Ref<Chunk>(memnew(Chunk));
-    chunk -> init(id , Vector3i(16,256,16));
+    chunk -> init(id , 0 , 256);
     chunk -> load_by_noise(noise);
     chunks.set(id , chunk);
     return chunk;
@@ -73,15 +73,16 @@ void ChunkManager::update(){
     }
 
     Array keys = chunks.keys();
-    UtilityFunctions::print(keys.size());
     Vector2 camera_pos = Vector2(camera -> get_global_position().x , camera -> get_global_position().z);
     for(int i = 0; i < keys.size() ; i++){
         Variant value = chunks.get(keys[i],nullptr);
         Ref<Chunk> chunk = Ref<Chunk>(value);
         if(chunk != nullptr){
-            if(camera_pos.distance_squared_to(chunk -> get_center()) > 16 * physic_distance){
+            if(camera_pos.distance_squared_to(chunk -> get_center()) > 256 * physic_distance * physic_distance){
                 chunks.erase(keys[i]);
+                chunk.unref();
             }
         }
     }
+    UtilityFunctions::print(chunks.size());
 }

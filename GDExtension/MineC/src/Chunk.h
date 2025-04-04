@@ -5,7 +5,7 @@
 #include <godot_cpp/classes/ref_counted.hpp>
 #include <godot_cpp/classes/noise.hpp>
 #include <godot_cpp/variant/variant.hpp>
-#include <BlockInfo.h>
+#include <BlockModelInfo.h>
 
 using namespace godot;
 
@@ -27,11 +27,12 @@ public:
 
     Vector2i chunk_id = Vector2i(0,0);
     Vector3i chunk_size = Vector3i(16,256,16);
+    int lowest_height = 0;
     int region_count = 0;
     unsigned short *blocks;
     bool is_loaded = false;
     void load_by_noise(const godot::Ref<godot::Noise>& noise);
-    void init(Vector2i id, Vector3i size);
+    void init(Vector2i id,int lowest, int height);
     void set_block(int x , int y ,int z , short id);
     void set_block_high_range(int x , int z , int from_y , int to_y , int id);
     short get_block(int x , int y, int z);

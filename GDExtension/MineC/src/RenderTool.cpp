@@ -23,8 +23,8 @@ void RenderTool::init(){
     for(int i = 0; i < keys.size() ; i++){
         short id = short(keys[i]);
         Object* object = block_infos.get(Variant(id),nullptr);
-        BlockInfo* block_info = dynamic_cast<BlockInfo*>(object);
-        if(block_info != nullptr && block_info -> cube_block){
+        BlockModelInfo* block_info = dynamic_cast<BlockModelInfo*>(object);
+        if(block_info != nullptr && block_info -> is_cube){
             is_cube.set(id,false);
         }
     }
@@ -46,18 +46,101 @@ Vector3 RenderTool :: rotate_point(Vector3 pos , Vector3 rotate_pos , float degr
     return final_pos;
 }
 
-bool RenderTool::render(Ref<Chunk> chunk){
+void RenderTool::render(Ref<Chunk> chunk){
+    render_data = Array();
+    chunk_pos = Vector3(chunk -> chunk_id.x * 16 , chunk -> lowest_height , chunk -> chunk_id.y * 16);
+    for(int i = 0; i< chunk -> chunk_size.y / 32;i++){
+        render_region(i , chunk);
+    }
+    return;
+}
+
+void RenderTool::render_edge(Ref<Chunk> chunk , int side , Ref<Chunk> edge_chunk){
+    if(side < 2 || side > 5){
+        return;
+    }
+    /*Side说明
+        2-west 3-east 4-north 5-south
+    */
+
+    render_data = Array();
+    chunk_pos = Vector3(chunk -> chunk_id.x * 16 , chunk -> lowest_height , chunk -> chunk_id.y * 16);
+    for(int i = 0; i< chunk -> chunk_size.y / 32;i++){
+        render_edge_region(i , chunk ,side , edge_chunk);
+    }
+    return;
+}
+
+bool RenderTool::render_edge_region(int index , Ref<Chunk> chunk , int side , Ref<Chunk> edge_chunk){
     if(!is_inited){
         return false;
     }
 	vertice = PackedVector3Array();
 	uv = PackedVector2Array();
 	Array array = Array();
-	array.resize(Mesh::ARRAY_MAX);
+    switch(side){
+        case 2:
+            for(int y = index * 32; y < (index+1) * 32 ; y++){
+                for(int z = 0; z < 16 ; z++){
+                    short block_id = chunk -> get_block(0,y,z);
+                    short side = edge_chunk -> get_block(15,y,z);
+                    if(is_cube.test(side) == true){
+                        draw_cube_side(Vector3i(0,y,z),block_id,2);
+                    }
+                }
+            }
+            break;
+        case 3:
+            for(int y = index * 32; y < (index+1) * 32 ; y++){
+                for(int z = 0; z < 16 ; z++){
+                    short block_id = chunk -> get_block(15,y,z);
+                    short side = edge_chunk -> get_block(0,y,z);
+                    if(is_cube.test(side) == true){
+                        draw_cube_side(Vector3i(15,y,z),block_id,3);
+                    }
+                }
+            }
+            break;
+        case 4:
+            for(int y = index * 32; y < (index+1) * 32 ; y++){
+                for(int x = 0; x < 16 ; x++){
+                    short block_id = chunk -> get_block(x,y,0);
+                    short side = edge_chunk -> get_block(x,y,15);
+                    if(is_cube.test(side) == true){
+                        draw_cube_side(Vector3i(x,y,0),block_id,4);
+                    }
+                }
+            }
+            break;
+        case 5:
+            for(int y = index * 32; y < (index+1) * 32 ; y++){
+                for(int x = 0; x < 16 ; x++){
+                    short block_id = chunk -> get_block(x,y,15);
+                    short side = edge_chunk -> get_block(x,y,0);
+                    if(is_cube.test(side) == true){
+                        draw_cube_side(Vector3i(x,y,15),block_id,5);
+                    }
+                }
+            }
+            break;
+    }
+    array.append(vertice);
+	array.append(uv);
+	render_data.append(array);
+    return true;
+}
 
-	for(int x = 0; x < chunk -> chunk_size.x ; x++){
-        for(int y = 0; y < chunk -> chunk_size.y ; y++){
-            for(int z = 0; z < chunk -> chunk_size.z ; z++){
+bool RenderTool::render_region(int index, Ref<Chunk> chunk){
+    if(!is_inited){
+        return false;
+    }
+	vertice = PackedVector3Array();
+	uv = PackedVector2Array();
+	Array array = Array();
+
+	for(int x = 0; x < 16 ; x++){
+        for(int y = index * 32; y < (index+1) * 32 ; y++){
+            for(int z = 0; z < 16 ; z++){
                 short block_id = chunk -> get_block(x,y,z);
                 if(block_id != 0 && is_cube.test(block_id) == false){
                     short side = chunk -> get_block(x+1,y,z);
@@ -89,19 +172,18 @@ bool RenderTool::render(Ref<Chunk> chunk){
         }
     }
 
-    array[Mesh::ARRAY_VERTEX] = vertice;
-	array[Mesh::ARRAY_TEX_UV] = uv;
-	render_data = array;
+    array.append(vertice);
+	array.append(uv);
+	render_data.append(array);
     //UtilityFunctions::print(count);
 	return true;
 }
 
 void RenderTool::draw_cube_side(Vector3i pos,short block_id,int side){
-    count++;
-    Vector3 position = Vector3(0,0,0);
+    Vector3 position = chunk_pos;
     
     Object* object = block_infos.get(block_id,nullptr);
-    BlockInfo* info = dynamic_cast<BlockInfo*>(object);
+    BlockModelInfo* info = dynamic_cast<BlockModelInfo*>(object);
     if(info == nullptr){
         return;
     }

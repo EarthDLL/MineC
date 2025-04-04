@@ -34,7 +34,7 @@ public:
     void set_east_data(Array data);
     void set_other_data(Array data);
     void set_id(Vector2i id);
-    
+    void update();
     
 };
 

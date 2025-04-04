@@ -1,8 +1,7 @@
-[gd_resource type="BlockInfo" format=3 uid="uid://cp45idp3g3723"]
+[gd_resource type="BlockModelInfo" format=3 uid="uid://cp45idp3g3723"]
 
 [resource]
-type_id = "minecraft:grass"
-id = 1
+type_id = "minecraft:dirt"
 texture_pieces = {
 "*": "dirt"
 }

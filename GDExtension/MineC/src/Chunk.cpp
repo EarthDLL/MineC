@@ -6,19 +6,20 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/variant/array.hpp>
 #include <godot_cpp/variant/variant.hpp>
-#include <BlockInfo.h>
+#include <BlockModelInfo.h>
 
 using namespace godot;
 
 const int Chunk::chunk_xz_size;
 
-void Chunk::init(Vector2i id = Vector2i(0,0) , Vector3i size = Vector3i(16,256,16)) {
+void Chunk::init(Vector2i id = Vector2i(0,0) , int lowest = 0 ,int height = 256) {
+    lowest_height = lowest;
 	chunk_id = id;
-    chunk_size = size;
+    chunk_size = Vector3i(16,height,16);
 }
 
 void Chunk::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("init", "id","size"), &Chunk::init);
+    ClassDB::bind_method(D_METHOD("init", "id","lowest_height","height"), &Chunk::init);
     ClassDB::bind_method(D_METHOD("load_by_noise","noise"), &Chunk::load_by_noise);
 }
 
@@ -32,7 +33,7 @@ void Chunk::load_by_noise(const godot::Ref<godot::Noise>& noise){
         for(int y=0 ; y < chunk_size.z ; y++){
                 float noise_high = noise -> get_noise_2d(start_point.x + x , start_point.y + y);
                 int high = std::round((std::clamp(noise_high+0.8,-1.0,1.0)+1) *32);
-                set_block_high_range(x,y,0,high,1);
+                set_block_high_range(x,y,0,high,2);
         }
     }
 	is_loaded = true;
@@ -45,7 +46,10 @@ void Chunk::set_block(int x , int y ,int z , short id){
 }
 
 short Chunk::get_block(int x , int y , int z){
-    if(x < 0 || x >= chunk_size.x || z < 0 || z >= chunk_size.z || y < 0 || y >= chunk_size.y){
+    if(y < lowest_height || y >= chunk_size.y){
+        return 0;
+    }
+    if(x < 0 || x >= chunk_size.x || z < 0 || z >= chunk_size.z){
         return 1;
     }
     int index = y * chunk_size.x * chunk_size.z + chunk_size.x * z + x;

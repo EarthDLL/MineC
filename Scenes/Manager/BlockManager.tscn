@@ -1,12 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://borjpg1vpa6yj"]
 
-[ext_resource type="BlockInfo" uid="uid://cp45idp3g3723" path="res://Behaviours/Blocks/Dirt.tres" id="1_p2xw5"]
-[ext_resource type="BlockInfo" uid="uid://cfxdjogko1nyi" path="res://Behaviours/Blocks/Grass.tres" id="2_52yut"]
-[ext_resource type="BlockInfo" uid="uid://b1iwro2lttlon" path="res://Behaviours/Blocks/Wool.tres" id="3_xklc5"]
+[ext_resource type="BlockModelInfo" uid="uid://cp45idp3g3723" path="res://Behaviours/Blocks/Dirt.tres" id="1_p2xw5"]
+[ext_resource type="BlockModelInfo" uid="uid://cfxdjogko1nyi" path="res://Behaviours/Blocks/Grass.tres" id="2_52yut"]
+[ext_resource type="BlockModelInfo" uid="uid://dx4eainlp1877" path="res://Behaviours/Blocks/Wool.tres" id="3_xklc5"]
 
 [node name="BlockManager" type="Node"]
 
 [node name="BlockInfoPreloader" type="ResourcePreloader" parent="."]
-resources = [PackedStringArray("Dirt2", "Grass2", "Wool2"), [ExtResource("1_p2xw5"), ExtResource("2_52yut"), ExtResource("3_xklc5")]]
+resources = [PackedStringArray("Dirt", "Grass", "Wool"), [ExtResource("1_p2xw5"), ExtResource("2_52yut"), ExtResource("3_xklc5")]]
 
 [node name="GeometryPreloader" type="ResourcePreloader" parent="."]

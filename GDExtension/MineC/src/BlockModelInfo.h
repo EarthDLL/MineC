@@ -1,16 +1,15 @@
-#ifndef BlockInfo_H
-#define BlockInfo_H
+#ifndef BlockModelInfo_H
+#define BlockModelInfo_H
 
 #include <godot_cpp/classes/resource.hpp>
 #include <godot_cpp/variant/variant.hpp>
 
 using namespace godot;
 
-class BlockInfo : public Resource{
-    GDCLASS(BlockInfo, Resource);
+class BlockModelInfo : public Resource{
+    GDCLASS(BlockModelInfo, Resource);
 
 private:
-    int id = 0;
     String type_id = "";
 public:
     enum CubeSide{
@@ -21,35 +20,38 @@ public:
         NORTH = 4,
         SOUTH = 5
     };
-    enum TextureType { 
-        Normal = 0,
-        Custom = 1
+    enum DealType { 
+        None = 0,
+        FacingOnly = 1,
+        DirectionOnly = 2,
+        Both = 3,
+        Custom = 4
     };
 
     static void _bind_methods();
-    bool cube_block = true;
-    String custom_geometry = "";
-    int texture_type = 0;
+
+    bool is_cube = true;
+    int deal_type = 0;
+    String custom_model = "";
     Dictionary texture_pieces;
+
     Dictionary texture_uv;
 
     void set_cube_block(bool value);
     bool is_cube_block();
-    void set_id(int value);
-    int get_id();
     void set_type_id(String value);
     String get_type_id();
-    void set_custom_geometry(String value);
-    String get_custom_geometry();
-    void set_texture_type(int value);
-    int get_texture_type();
+    void set_custom_model(String value);
+    String get_custom_model();
+    void set_deal_type(int value);
+    int get_deal_type();
     void set_texture_pieces(Dictionary value);
     Dictionary get_texture_pieces();
     Array translate_data();
-    void deal_uv(Dictionary uv_base, Array faces);
+    void deal_uv(Dictionary uv_base);
 };
 
-VARIANT_ENUM_CAST(BlockInfo :: CubeSide);
-VARIANT_ENUM_CAST(BlockInfo :: TextureType);
+VARIANT_ENUM_CAST(BlockModelInfo :: CubeSide);
+VARIANT_ENUM_CAST(BlockModelInfo :: DealType);
 
 #endif

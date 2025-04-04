@@ -5,15 +5,16 @@ const texture_path = "res://Resources/Textures/"
 
 
 var block_infos := {}
+var block_ids := {}
+var id_count := 2
 var block_texture : ImageTexture = null
 var block_material : StandardMaterial3D = load("res://Resources/Render/Blocks.tres")
 var block_texture_uvs := {}
-var cube_geo : Geometry = load("res://Resources/Geometry/Cube.tres")
 
 func _init() -> void:
 	Engine.register_singleton("ResManager",self)
 
-func get_block_info(id : int) -> BlockInfo:
+func get_block_info(id : int) -> BlockModelInfo:
 	return block_infos.get(id,null)
 
 func read_block_infos() -> void:
@@ -22,10 +23,12 @@ func read_block_infos() -> void:
 		var names := dir.get_files()
 		for file_name : String in names:
 			if file_name.ends_with(".tres"):
-				var res : BlockInfo = load(block_info_dir + file_name) as BlockInfo
+				var res : BlockModelInfo = load(block_info_dir + file_name) as BlockModelInfo
 				if is_instance_valid(res):
-					block_infos[res.id] = res
-					res.deal_uv(block_texture_uvs,ResManager.cube_geo.textures)
+					block_ids[res.type_id] = id_count
+					block_infos[id_count] = res
+					id_count += 1
+					res.deal_uv(block_texture_uvs)
 
 func read_block_textures() -> void:
 	var mix_tool := BlockMixImageTool.new()
