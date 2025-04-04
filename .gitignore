@@ -15,5 +15,5 @@ GDExtension/godot-cpp/
 .DS_Store
 Thumbs.db
 .nomedia
-.dblite
-.os
+*.dblite
+*.os

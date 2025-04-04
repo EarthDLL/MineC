@@ -10,6 +10,7 @@
 using namespace godot;
 
 void RenderManager :: _bind_methods() {
+    ClassDB::bind_method(D_METHOD("set_merge_level","level"), &RenderManager::set_merge_level);
     ClassDB::bind_method(D_METHOD("set_camera","node"), &RenderManager::set_camera);
     ClassDB::bind_method(D_METHOD("set_chunk_manager","manager"), &RenderManager::set_chunk_manager);
     ClassDB::bind_method(D_METHOD("start"), &RenderManager::start);
@@ -19,6 +20,10 @@ void RenderManager :: _bind_methods() {
 
 void RenderManager :: set_camera(Node3D* value){
     camera = value;
+}
+
+void RenderManager:: set_merge_level(int value){
+    merge_level = value;
 }
 
 void RenderManager :: set_render_distance(int value){
@@ -35,8 +40,19 @@ void RenderManager::_physics_process(float _delta){
     }
 }
 
-void RenderManager::render_chunk(Ref<Chunk> chunk){
+bool RenderManager::render_chunk(Vector2i chunk_id){
+    if(chunk_manager -> has_chunk(chunk_id) == false || data_pool.has(chunk_id) == true){
+        return false;
+    }
+    Ref<Chunk> chunk = chunk_manager -> get_chunk(chunk_id);
     render_tool -> render(chunk);
+    ChunkRenderData* render_data_ptr = memnew(ChunkRenderData);
+    Ref<ChunkRenderData> render_data = render_data_ptr;
+    render_data -> set_main_data(render_tool -> get_render_data());
+    data_pool.set(chunk_id , render_data);
+    edge_pool.append(render_data);
+    try_merge();
+    
     MeshInstance3D* instance = memnew(MeshInstance3D);
     ArrayMesh* mesh = memnew(ArrayMesh);
     mesh -> add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES,render_tool -> get_render_data());
@@ -44,6 +60,11 @@ void RenderManager::render_chunk(Ref<Chunk> chunk){
 	instance -> set_position(Vector3(chunk -> chunk_id.x * 16, 0 ,chunk -> chunk_id.y* 16));
 	instance -> set_material_override(render_tool -> ResManager -> get("block_material"));
     call_deferred("add_child",instance);
+    return true;
+}
+
+void RenderManager::try_merge(){
+    
 }
 
 void RenderManager :: _ready(){
@@ -59,7 +80,7 @@ void RenderManager::render_all_chunks(Array pool){
     for(int i=0;i<pool.size();i++){
         Variant chunk_id = pool[i];
         Ref<Chunk> chunk = chunk_manager -> create_chunk(Vector2i(chunk_id));
-        render_chunk(chunk);
+        render_chunk(chunk -> chunk_id);
     }
     is_thread_running.store(false);
     chunk_manager -> set_lock(false);
@@ -67,6 +88,10 @@ void RenderManager::render_all_chunks(Array pool){
 
 void RenderManager::set_chunk_manager(ChunkManager* value){
     chunk_manager = value;
+}
+
+bool RenderManager::is_chunk_rendered(Vector2i chunk_id){
+    return data_pool.has(chunk_id);
 }
 
 void RenderManager::update(){
