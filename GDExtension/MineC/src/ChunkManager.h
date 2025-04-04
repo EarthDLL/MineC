@@ -3,11 +3,8 @@
 
 #include <atomic>
 #include <godot_cpp/classes/node3d.hpp>
-#include <godot_cpp/classes/material.hpp>
 #include <godot_cpp/classes/thread.hpp>
 #include <godot_cpp/classes/engine.hpp>
-#include <godot_cpp/classes/array_mesh.hpp>
-#include <godot_cpp/classes/mesh_instance3d.hpp>
 #include <godot_cpp/variant/variant.hpp>
 #include <godot_cpp/classes/noise.hpp>
 #include <Chunk.h>

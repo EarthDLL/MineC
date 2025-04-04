@@ -1,9 +1,7 @@
 #ifndef ChunkRenderData_H
 #define ChunkRenderData_H
 
-#include <bitset>
 #include <godot_cpp/classes/ref_counted.hpp>
-#include <godot_cpp/classes/noise.hpp>
 #include <godot_cpp/variant/variant.hpp>
 
 using namespace godot;

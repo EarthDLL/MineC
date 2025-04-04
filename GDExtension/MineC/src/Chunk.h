@@ -29,21 +29,12 @@ public:
     Vector3i chunk_size = Vector3i(16,256,16);
     int region_count = 0;
     unsigned short *blocks;
-    int blocks_length;
-    Dictionary render_data;
     bool is_loaded = false;
-    PackedVector3Array vertice = PackedVector3Array();
-    PackedVector2Array uv = PackedVector2Array();
-
-    Dictionary get_render_data() const;
-    void set_render_data(const Dictionary value);
-    bool render(int region_index);
     void load_by_noise(const godot::Ref<godot::Noise>& noise);
     void init(Vector2i id, Vector3i size);
     void set_block(int x , int y ,int z , short id);
     void set_block_high_range(int x , int z , int from_y , int to_y , int id);
     short get_block(int x , int y, int z);
-    void draw_cube_side(Vector3i pos,Ref<BlockInfo> block,int side);
     Vector2 get_center();
 };
 
