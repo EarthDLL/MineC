@@ -41,6 +41,10 @@ void Chunk::load_by_noise(const godot::Ref<godot::Noise>& noise){
     //debuger->callv("output_time",Array());
 }
 
+void Chunk::destroy_chunk(){
+    delete[] blocks;
+}
+
 void Chunk::set_block(int x , int y ,int z , short id){
     int index = y * chunk_size.x * chunk_size.z + chunk_size.x * z + x;
     blocks[index] = id;

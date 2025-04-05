@@ -25,6 +25,7 @@ private:
     int render_distance = 6;
     int merge_level = 2;
     Node3D* camera;
+    bool require_merge;
     Array instances;
     Dictionary data_pool;
     /* 格式：ChunkID : type(int)
@@ -59,7 +60,7 @@ public:
     void update();
     void break_chunk_mesh(Vector2i chunk_id);
     void try_merge(bool force,bool use_unable_completed);
-    bool is_chunk_out(Vector2 camera_pos , Vector2i chunk_id);
+    bool is_chunk_out(Vector2i chunk_id , bool use_physic);
     void test_edge(Ref<ChunkRenderData> data);
     void add_to_data(Array data , PackedVector3Array& vertice, PackedVector2Array& uv);
     void break_block_mesh(Vector2i chunk_id);

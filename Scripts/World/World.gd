@@ -25,10 +25,11 @@ func reload() -> void:
 func load_world(path : String) -> void:
 	pass
 
-func start(dis : int) -> void:
+func start(dis : int , level : int) -> void:
 	var manager = RenderManager.new()
 	add_child(manager)
 	manager.set_camera($Player2)
 	manager.set_render_distance(dis)
+	manager.set_merge_level(level)
 	manager.set_chunk_manager(dimension.manager)
 	manager.start()

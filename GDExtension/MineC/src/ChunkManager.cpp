@@ -24,6 +24,8 @@ void ChunkManager::_physics_process(float _delta){
     }
 }
 
+
+
 Vector2i ChunkManager::get_chunk_id_by_pos(Vector3 pos){
     return Vector2i((Vector2(pos.x,pos.z)/16).floor());
 }
@@ -80,9 +82,9 @@ void ChunkManager::update(){
         if(chunk != nullptr){
             if(camera_pos.distance_squared_to(chunk -> get_center()) > 256 * (physic_distance+1) * (physic_distance+1)){
                 chunks.erase(keys[i]);
+                chunk -> destroy_chunk();
                 chunk.unref();
             }
         }
     }
-    UtilityFunctions::print(chunks.size());
 }

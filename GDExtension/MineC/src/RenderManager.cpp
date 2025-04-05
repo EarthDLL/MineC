@@ -165,6 +165,7 @@ void RenderManager::break_chunk_mesh(Vector2i chunk_id){
    if(data_pool.has(chunk_id) == false || mesh_pool.has(chunk_id) == false){
     return;
    }
+   require_merge = true;
    Array chunks = mesh_pool.get(chunk_id,Variant());
    Variant mesh_var = chunks[0];
    chunks.remove_at(0);
@@ -176,7 +177,7 @@ void RenderManager::break_chunk_mesh(Vector2i chunk_id){
         switch(int(data_pool.get(chunk_id , 0))){
             case 2:
                 for(int i = 0; i < chunks.size();i++){
-                    if(is_chunk_out(camera_pos,Vector2i(chunks[i]))){
+                    if(is_chunk_out(Vector2i(chunks[i]),false)){
                         edge_pool.erase(chunks[i]);
                         data_pool.erase(chunks[i]);
                         cache_pool.erase(chunks[i]);
@@ -187,7 +188,7 @@ void RenderManager::break_chunk_mesh(Vector2i chunk_id){
             break;
             case 3:
                 for(int i = 0; i < chunks.size();i++){
-                    if(is_chunk_out(camera_pos,Vector2i(chunks[i]))){
+                    if(is_chunk_out(Vector2i(chunks[i]),false)){
                         data_pool.erase(chunks[i]);
                         cache_pool.erase(chunks[i]);
                     }else{
@@ -310,9 +311,15 @@ void RenderManager::set_chunk_manager(ChunkManager* value){
     chunk_manager = value;
 }
 
-bool RenderManager::is_chunk_out(Vector2 camera_pos , Vector2i chunk_id){
-    int physic_distance = chunk_manager -> physic_distance;
-    if(camera_pos.distance_squared_to(Vector2(chunk_id.x * 16 + 8 , chunk_id.y * 16 + 8)) > 256 * (physic_distance+1) * (physic_distance+1)){
+bool RenderManager::is_chunk_out(Vector2i chunk_id ,bool use_physic){
+    int distance = 0;
+    if(use_physic == true){
+        distance = chunk_manager -> physic_distance + 1;
+    }else{
+        distance = render_distance;
+    }
+    
+    if(camera_pos.distance_squared_to(Vector2(chunk_id.x * 16 + 8 , chunk_id.y * 16 + 8)) > 256 * distance * distance){
         return true;
     }
     return false;
@@ -331,22 +338,48 @@ void RenderManager::update(){
     camera_pos = Vector2(camera -> get_global_position().x , camera -> get_global_position().z);
     Array keys = data_pool.keys();
     for(int i = 0; i < keys.size() ; i++){
-        int state = data_pool.get(keys[i],Vector2i());
+        int state = data_pool.get(keys[i],0);
+        if(state == 3 && is_chunk_out(Vector2i(keys[i]),true)){
+            cache_pool.erase(keys[i]);
+            data_pool.set(keys[i],4);
+            state = 4;
+        }
         if(state == 2 || state == 3 || state ==4){
-            if(is_chunk_out(camera_pos , Vector2(keys[i]))){
+            Vector2i chunk_id = keys[i];
+            if(is_chunk_out(chunk_id , false)){
                 break_chunk_mesh(Vector2(keys[i]));
             }
         }
     }
 
+    if(require_merge == true){
+        try_merge(true,false);
+        try_merge(true,true);
+        require_merge = false;
+    }
+
+
     //检测新区块
     Vector2i current_chunk_id = chunk_manager -> get_chunk_id_by_pos(camera -> get_global_position());
     Array wait_pool;
-    for(int x = current_chunk_id.x - render_distance ; x < current_chunk_id.x+ render_distance +1;x++){
-        for(int y = current_chunk_id.y-render_distance; y < current_chunk_id.y+render_distance+1;y++){
-            Vector2i id = Vector2i(x,y);
-            if(data_pool.has(id) == false){
-                wait_pool.append(id);
+    for(int distance = 0; distance <= render_distance;distance++){
+        for(int dx = -distance;dx <= distance; dx++){
+            int dy = distance - std::abs(dx);
+            Vector2i id;
+            if(dy == 0){
+                id = current_chunk_id + Vector2i(dx,0);
+                if(data_pool.has(id) == false && is_chunk_out(id , false) == false){
+                    wait_pool.append(id);
+                }
+            }else{
+                id = current_chunk_id + Vector2i(dx,dy);
+                if(data_pool.has(id) == false && is_chunk_out(id , false) == false){
+                    wait_pool.append(id);
+                }
+                id = current_chunk_id + Vector2i(dx,-dy);
+                if(data_pool.has(id) == false && is_chunk_out(id , false) == false){
+                    wait_pool.append(id);
+                }
             }
         }
     }

@@ -25,6 +25,7 @@ public:
 	    CUSTOM = 3
     };
 
+    void destroy_chunk();
     Vector2i chunk_id = Vector2i(0,0);
     Vector3i chunk_size = Vector3i(16,256,16);
     int lowest_height = 0;
