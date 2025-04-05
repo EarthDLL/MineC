@@ -78,7 +78,7 @@ void ChunkManager::update(){
         Variant value = chunks.get(keys[i],nullptr);
         Ref<Chunk> chunk = Ref<Chunk>(value);
         if(chunk != nullptr){
-            if(camera_pos.distance_squared_to(chunk -> get_center()) > 256 * physic_distance * physic_distance){
+            if(camera_pos.distance_squared_to(chunk -> get_center()) > 256 * (physic_distance+1) * (physic_distance+1)){
                 chunks.erase(keys[i]);
                 chunk.unref();
             }

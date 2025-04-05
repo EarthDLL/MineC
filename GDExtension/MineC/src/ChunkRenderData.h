@@ -26,6 +26,7 @@ public:
     Array edge_data_west;
     Array edge_data_east;
     Array other_data;
+    Array same_mesh_ids; //合并为同一个Mesh的其他区块的id
     
     void set_main_data(Array data);
     void set_north_data(Array data);

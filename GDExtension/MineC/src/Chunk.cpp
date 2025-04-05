@@ -34,6 +34,7 @@ void Chunk::load_by_noise(const godot::Ref<godot::Noise>& noise){
                 float noise_high = noise -> get_noise_2d(start_point.x + x , start_point.y + y);
                 int high = std::round((std::clamp(noise_high+0.8,-1.0,1.0)+1) *32);
                 set_block_high_range(x,y,0,high,2);
+                set_block(x,high,y,3);
         }
     }
 	is_loaded = true;

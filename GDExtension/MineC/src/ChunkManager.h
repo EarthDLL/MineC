@@ -20,9 +20,9 @@ private:
     Node3D* camera;
     Dictionary chunks;
     Ref<Noise> noise;
-    float physic_distance = 6;
     std::atomic<bool> is_thread_running{false};
 public:
+    float physic_distance = 6;
     void _ready();
     void set_camera(Node3D* value);
     void _physics_process(float _delta);
